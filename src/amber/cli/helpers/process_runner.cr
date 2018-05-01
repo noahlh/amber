@@ -91,7 +91,7 @@ module Sentry
 
     private def create_npm_process
       node_log "Installing dependencies..."
-      Amber::CLI::Helpers.run("npm install --loglevel=error && npm run watch", wait: false)
+      Amber::CLI::Helpers.run("yarn install --loglevel=error && yarn run watch", wait: false)
       node_log "Watching public directory"
     end
 
