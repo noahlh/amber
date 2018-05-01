@@ -40,6 +40,9 @@ module Amber::Support
       case file
       when .ends_with? ".css"
         reload_clients(msg: "refreshcss")
+      when ( .ends_with? ".js" && .dirname.includes? "stylesheet" )
+        log "Ignoring #{file} because it's a stylesheet, not actual js"
+        return
       else
         reload_clients(msg: "reload")
       end
@@ -54,6 +57,7 @@ module Amber::Support
       Dir.glob(["public/**/*"]) do |file|
         timestamp = get_timestamp(file)
         if FILE_TIMESTAMPS[file]? != timestamp
+          # return if file.
           if @app_running
             log "File changed: ./#{file.colorize(:light_gray)}"
           end
