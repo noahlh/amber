@@ -17,6 +17,7 @@ module Amber::Support
       loop do
         scan_files
         @app_running = true
+        # sleep Time::Span.new(0, 0, 0, 0, 500)
         sleep 1
       end
     end
@@ -41,7 +42,7 @@ module Amber::Support
       when .ends_with? ".css"
         reload_clients(msg: "refreshcss")
       when .ends_with? ".js"
-        if file.dirname.includes? "stylesheet"
+        if file.includes? "stylesheet"
           log "Ignoring #{file} because it's a stylesheet, not actual js"
           return
         end
