@@ -40,9 +40,11 @@ module Amber::Support
       case file
       when .ends_with? ".css"
         reload_clients(msg: "refreshcss")
-      when ( .ends_with? ".js" && .dirname.includes? "stylesheet" )
-        log "Ignoring #{file} because it's a stylesheet, not actual js"
-        return
+      when .ends_with? ".js"
+        if file.dirname.includes? "stylesheet"
+          log "Ignoring #{file} because it's a stylesheet, not actual js"
+          return
+        end
       else
         reload_clients(msg: "reload")
       end
