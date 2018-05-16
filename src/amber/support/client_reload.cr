@@ -40,12 +40,18 @@ module Amber::Support
     private def check_file(file)
       case file
       when .ends_with? ".css"
-        reload_clients(msg: "refreshcss")
+        # reload_clients(msg: "refreshcss")
+        log "Ignore CSS files (VUE HMR handling this)"
       when .ends_with? ".js"
-        if file.includes? "stylesheet"
-          log "Ignoring #{file} because it's a stylesheet, not actual js"
-          return
-        end
+        # if file.includes? "stylesheet"
+        # log "Ignoring #{file} because it's a stylesheet, not actual js"
+        # return
+        # end
+        log "Ignore JS files (manual reload required)"
+        return
+      when .ends_with? ".map"
+        log "Ignore map files (related to JS/CSS)"
+        return
       else
         reload_clients(msg: "reload")
       end
